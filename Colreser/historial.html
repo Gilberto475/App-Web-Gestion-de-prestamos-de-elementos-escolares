@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Historial - ColReser</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="navbar">
+      <div class="nav-content">
+        <a href="estudiante.html" class="nav-logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>ColReser</span>
+        </a>
+        
+        <ul class="nav-menu">
+          <li><a href="estudiante.html"><i class="fas fa-home"></i> Inicio</a></li>
+          <li><a href="prestamos.html"><i class="fas fa-calendar-plus"></i> Solicitar Préstamo</a></li>
+          <li><a href="prestados.html"><i class="fas fa-list"></i> Mis Préstamos</a></li>
+          <li><a href="historial.html" class="active"><i class="fas fa-history"></i> Historial</a></li>
+          <li><a href="configuracion.html"><i class="fas fa-cog"></i> Configuración</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <div class="user-profile" id="userProfile">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <span class="user-name">Estudiante</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          
+          <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Historial de Préstamos</h1>
+        <p class="dashboard-subtitle">Consulta tu historial completo de préstamos y devoluciones</p>
+      </div>
+
+      <div class="history-stats">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <i class="fas fa-list"></i>
+          </div>
+          <div class="stat-number">45</div>
+          <div class="stat-label">Total de Préstamos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-number">42</div>
+          <div class="stat-label">Devueltos a Tiempo</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-number">3</div>
+          <div class="stat-label">Devueltos con Retraso</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon red">
+            <i class="fas fa-percentage"></i>
+          </div>
+          <div class="stat-number">93%</div>
+          <div class="stat-label">Puntualidad</div>
+        </div>
+      </div>
+
+      <div class="history-container">
+        <div class="history-filters">
+          <div class="filter-group">
+            <label for="yearFilter">Año:</label>
+            <select id="yearFilter">
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="typeFilter">Tipo:</label>
+            <select id="typeFilter">
+              <option value="all">Todos</option>
+              <option value="equipo">Equipos</option>
+              <option value="libro">Libros</option>
+              <option value="espacio">Espacios</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="statusFilter">Estado:</label>
+            <select id="statusFilter">
+              <option value="all">Todos</option>
+              <option value="completed">Completados</option>
+              <option value="overdue">Vencidos</option>
+              <option value="cancelled">Cancelados</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="history-table-container">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Elemento</th>
+                <th>Tipo</th>
+                <th>Fecha Préstamo</th>
+                <th>Fecha Devolución</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <!-- Los datos se cargarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <button class="pagination-btn" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <span class="pagination-info">Página 1 de 3</span>
+          <button class="pagination-btn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Colegio OEA. Todos los derechos reservados.</p>
+      <p>Sistema de Reservas ColReser - Desarrollado para la comunidad educativa</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserData();
+      loadHistory();
+      setupFilters();
+    });
+
+    function loadUserData() {
+      const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+      const userName = document.querySelector('.user-name');
+      if (userName) userName.textContent = user.name || 'Estudiante';
+    }
+
+    function loadHistory() {
+      const tableBody = document.getElementById('historyTableBody');
+      
+      // Simular datos de historial
+      const history = [
+        {
+          id: 1,
+          item: 'Laptop Dell XPS 13',
+          type: 'equipo',
+          startDate: '2024-01-10',
+          endDate: '2024-01-13',
+          status: 'completed'
+        },
+        {
+          id: 2,
+          item: 'Libro: Introducción a la IA',
+          type: 'libro',
+          startDate: '2024-01-05',
+          endDate: '2024-01-20',
+          status: 'completed'
+        },
+        {
+          id: 3,
+          item: 'Sala de Estudio A-101',
+          type: 'espacio',
+          startDate: '2024-01-08',
+          endDate: '2024-01-08',
+          status: 'overdue'
+        },
+        {
+          id: 4,
+          item: 'Proyector Epson',
+          type: 'equipo',
+          startDate: '2023-12-15',
+          endDate: '2023-12-18',
+          status: 'completed'
+        },
+        {
+          id: 5,
+          item: 'Guitarra Acústica',
+          type: 'instrumento',
+          startDate: '2023-12-10',
+          endDate: '2023-12-25',
+          status: 'cancelled'
+        }
+      ];
+
+      tableBody.innerHTML = history.map(item => `
+        <tr>
+          <td>
+            <div class="item-info">
+              <i class="fas ${getItemIcon(item.type)}"></i>
+              <span>${item.item}</span>
+            </div>
+          </td>
+          <td>${getTypeText(item.type)}</td>
+          <td>${formatDate(item.startDate)}</td>
+          <td>${formatDate(item.endDate)}</td>
+          <td>
+            <span class="status-badge ${item.status}">
+              ${getStatusText(item.status)}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-secondary" onclick="viewDetails(${item.id})">
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function getItemIcon(type) {
+      const icons = {
+        equipo: 'fa-laptop',
+        libro: 'fa-book',
+        espacio: 'fa-building',
+        equipo_audiovisual: 'fa-video',
+        instrumento: 'fa-music'
+      };
+      return icons[type] || 'fa-cube';
+    }
+
+    function getTypeText(type) {
+      const types = {
+        equipo: 'Equipo',
+        libro: 'Libro',
+        espacio: 'Espacio',
+        equipo_audiovisual: 'Audiovisual',
+        instrumento: 'Instrumento'
+      };
+      return types[type] || type;
+    }
+
+    function getStatusText(status) {
+      const statusTexts = {
+        completed: 'Completado',
+        overdue: 'Vencido',
+        cancelled: 'Cancelado'
+      };
+      return statusTexts[status] || status;
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+    }
+
+    function setupFilters() {
+      const yearFilter = document.getElementById('yearFilter');
+      const typeFilter = document.getElementById('typeFilter');
+      const statusFilter = document.getElementById('statusFilter');
+
+      [yearFilter, typeFilter, statusFilter].forEach(filter => {
+        filter.addEventListener('change', function() {
+          // Aquí se implementaría la lógica de filtrado
+          console.log('Filtro cambiado:', this.value);
+        });
+      });
+    }
+
+    function viewDetails(itemId) {
+      alert('Detalles del préstamo #' + itemId);
+      // Aquí se podría abrir un modal con más detalles
+    }
+  </script>
+</body>
+</html> 

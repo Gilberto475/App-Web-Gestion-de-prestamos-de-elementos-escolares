@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mis Préstamos - ColReser</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="navbar">
+      <div class="nav-content">
+        <a href="estudiante.html" class="nav-logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>ColReser</span>
+        </a>
+        
+        <ul class="nav-menu">
+          <li><a href="estudiante.html"><i class="fas fa-home"></i> Inicio</a></li>
+          <li><a href="prestamos.html"><i class="fas fa-calendar-plus"></i> Solicitar Préstamo</a></li>
+          <li><a href="prestados.html" class="active"><i class="fas fa-list"></i> Mis Préstamos</a></li>
+          <li><a href="historial.html"><i class="fas fa-history"></i> Historial</a></li>
+          <li><a href="configuracion.html"><i class="fas fa-cog"></i> Configuración</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <div class="user-profile" id="userProfile">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <span class="user-name">Estudiante</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          
+          <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Mis Préstamos</h1>
+        <p class="dashboard-subtitle">Gestiona tus préstamos activos y próximos vencimientos</p>
+      </div>
+
+      <div class="loans-container">
+        <div class="loans-filters">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="active">Activos</button>
+          <button class="filter-btn" data-filter="pending">Pendientes</button>
+          <button class="filter-btn" data-filter="overdue">Vencidos</button>
+        </div>
+
+        <div class="loans-grid" id="loansGrid">
+          
+        </div>
+
+        <div class="no-loans" id="noLoans" style="display: none;">
+          <i class="fas fa-inbox"></i>
+          <h3>No tienes préstamos activos</h3>
+          <p>¿Necesitas reservar algo? <a href="prestamos.html">Solicita un préstamo</a></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Colegio OEA. Todos los derechos reservados.</p>
+      <p>Sistema de Reservas ColReser - Desarrollado para la comunidad educativa</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserData();
+      loadLoans();
+      setupFilters();
+    });
+
+    function loadUserData() {
+      const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+      const userName = document.querySelector('.user-name');
+      if (userName) userName.textContent = user.name || 'Estudiante';
+    }
+
+    function loadLoans() {
+      const loansGrid = document.getElementById('loansGrid');
+      const noLoans = document.getElementById('noLoans');
+      
+
+      const loans = [
+        {
+          id: 1,
+          item: 'Laptop Dell XPS 13',
+          type: 'equipo',
+          status: 'active',
+          startDate: '2024-01-15',
+          endDate: '2024-01-18',
+          startTime: '09:00',
+          endTime: '17:00',
+          daysLeft: 2
+        },
+        {
+          id: 2,
+          item: 'Libro: Introducción a la IA',
+          type: 'libro',
+          status: 'pending',
+          startDate: '2024-01-20',
+          endDate: '2024-02-04',
+          startTime: '08:00',
+          endTime: '18:00',
+          daysLeft: 5
+        },
+        {
+          id: 3,
+          item: 'Sala de Estudio A-101',
+          type: 'espacio',
+          status: 'overdue',
+          startDate: '2024-01-10',
+          endDate: '2024-01-10',
+          startTime: '14:00',
+          endTime: '18:00',
+          daysLeft: -3
+        }
+      ];
+
+      if (loans.length === 0) {
+        loansGrid.style.display = 'none';
+        noLoans.style.display = 'block';
+        return;
+      }
+
+      loansGrid.style.display = 'grid';
+      noLoans.style.display = 'none';
+
+      loansGrid.innerHTML = loans.map(loan => `
+        <div class="loan-card ${loan.status}" data-status="${loan.status}">
+          <div class="loan-header">
+            <div class="loan-icon">
+              <i class="fas ${getLoanIcon(loan.type)}"></i>
+            </div>
+            <div class="loan-status ${loan.status}">
+              ${getStatusText(loan.status)}
+            </div>
+          </div>
+          
+          <div class="loan-content">
+            <h3>${loan.item}</h3>
+            <div class="loan-details">
+              <div class="detail-item">
+                <i class="fas fa-calendar"></i>
+                <span>${formatDate(loan.startDate)} - ${formatDate(loan.endDate)}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-clock"></i>
+                <span>${loan.startTime} - ${loan.endTime}</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-calendar-day"></i>
+                <span>${getDaysText(loan.daysLeft)}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="loan-actions">
+            ${getActionButtons(loan)}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getLoanIcon(type) {
+      const icons = {
+        equipo: 'fa-laptop',
+        libro: 'fa-book',
+        espacio: 'fa-building',
+        equipo_audiovisual: 'fa-video',
+        instrumento: 'fa-music'
+      };
+      return icons[type] || 'fa-cube';
+    }
+
+    function getStatusText(status) {
+      const statusTexts = {
+        active: 'Activo',
+        pending: 'Pendiente',
+        overdue: 'Vencido'
+      };
+      return statusTexts[status] || status;
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+    }
+
+    function getDaysText(daysLeft) {
+      if (daysLeft < 0) {
+        return `${Math.abs(daysLeft)} días vencido`;
+      } else if (daysLeft === 0) {
+        return 'Vence hoy';
+      } else if (daysLeft === 1) {
+        return 'Vence mañana';
+      } else {
+        return `${daysLeft} días restantes`;
+      }
+    }
+
+    function getActionButtons(loan) {
+      let buttons = '';
+      
+      if (loan.status === 'active') {
+        buttons += `
+          <button class="btn btn-primary btn-sm" onclick="extendLoan(${loan.id})">
+            <i class="fas fa-plus"></i> Extender
+          </button>
+        `;
+      }
+      
+      if (loan.status === 'pending') {
+        buttons += `
+          <button class="btn btn-danger btn-sm" onclick="cancelLoan(${loan.id})">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        `;
+      }
+      
+      buttons += `
+        <button class="btn btn-secondary btn-sm" onclick="viewDetails(${loan.id})">
+          <i class="fas fa-eye"></i> Ver Detalles
+        </button>
+      `;
+      
+      return buttons;
+    }
+
+    function setupFilters() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const loanCards = document.querySelectorAll('.loan-card');
+      
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const filter = this.dataset.filter;
+          
+    
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+       
+          loanCards.forEach(card => {
+            const status = card.dataset.status;
+            
+            if (filter === 'all' || status === filter) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+
+    function extendLoan(loanId) {
+      if (confirm('¿Deseas extender este préstamo por 3 días más?')) {
+        alert('Préstamo extendido exitosamente');
+        loadLoans(); 
+      }
+    }
+
+    function cancelLoan(loanId) {
+      if (confirm('¿Estás seguro de que deseas cancelar este préstamo?')) {
+        alert('Préstamo cancelado exitosamente');
+        loadLoans(); 
+      }
+    }
+
+    function viewDetails(loanId) {
+      alert('Detalles del préstamo #' + loanId);
+      
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administrador - ColReser</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <h2>Panel del Administrador</h2>
+    <button onclick="location.href='prestamos.html'">Ver Préstamos</button>
+    <button onclick="location.href='prestados.html'">Elementos Prestados</button>
+    <h3>Agregar nuevo elemento</h3>
+    <form id="formAgregarElemento">
+      <input type="text" placeholder="Nombre del objeto" required />
+      <input type="number" placeholder="Cantidad disponible" required />
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solicitar Préstamo - ColReser</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="navbar">
+      <div class="nav-content">
+        <a href="estudiante.html" class="nav-logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>ColReser</span>
+        </a>
+        
+        <ul class="nav-menu">
+          <li><a href="estudiante.html"><i class="fas fa-home"></i> Inicio</a></li>
+          <li><a href="prestamos.html" class="active"><i class="fas fa-calendar-plus"></i> Solicitar Préstamo</a></li>
+          <li><a href="prestados.html"><i class="fas fa-list"></i> Mis Préstamos</a></li>
+          <li><a href="historial.html"><i class="fas fa-history"></i> Historial</a></li>
+          <li><a href="configuracion.html"><i class="fas fa-cog"></i> Configuración</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <div class="user-profile" id="userProfile">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <span class="user-name">Estudiante</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          
+          <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Solicitar Préstamo</h1>
+        <p class="dashboard-subtitle">Reserva equipos, libros o espacios para tu uso académico</p>
+      </div>
+
+      <div class="loan-form-container">
+        <div class="loan-form-card">
+          <form id="loanForm" class="loan-form">
+            <div class="form-section">
+              <h3><i class="fas fa-info-circle"></i> Información del Préstamo</h3>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="itemType">Tipo de Elemento</label>
+                  <select id="itemType" required>
+                    <option value="">Selecciona el tipo</option>
+                    <option value="equipo">Equipo de Cómputo</option>
+                    <option value="libro">Libro</option>
+                    <option value="espacio">Espacio de Estudio</option>
+                    <option value="equipo_audiovisual">Equipo Audiovisual</option>
+                    <option value="instrumento">Instrumento Musical</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="itemName">Elemento Específico</label>
+                  <select id="itemName" required>
+                    <option value="">Primero selecciona el tipo</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="startDate">Fecha de Inicio</label>
+                  <input type="date" id="startDate" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="endDate">Fecha de Devolución</label>
+                  <input type="date" id="endDate" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="purpose">Propósito del Préstamo</label>
+                <textarea id="purpose" rows="3" placeholder="Describe brevemente para qué necesitas este elemento..." required></textarea>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="fas fa-clock"></i> Horario de Uso</h3>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="startTime">Hora de Inicio</label>
+                  <input type="time" id="startTime" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="endTime">Hora de Finalización</label>
+                  <input type="time" id="endTime" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="fas fa-exclamation-triangle"></i> Términos y Condiciones</h3>
+              
+              <div class="terms-checkbox">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="acceptTerms" required>
+                  <span class="checkmark"></span>
+                  Acepto los términos y condiciones del préstamo
+                </label>
+              </div>
+              
+              <div class="terms-checkbox">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="acceptResponsibility" required>
+                  <span class="checkmark"></span>
+                  Me comprometo a devolver el elemento en buen estado
+                </label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-check"></i>
+                Solicitar Préstamo
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="loan-info-card">
+          <h3><i class="fas fa-info-circle"></i> Información Importante</h3>
+          
+          <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h4>Horarios de Préstamo</h4>
+              <p>Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <i class="fas fa-calendar"></i>
+            <div>
+              <h4>Duración Máxima</h4>
+              <p>Equipos: 3 días | Libros: 15 días | Espacios: 4 horas</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+              <h4>Políticas</h4>
+              <p>Devolución puntual obligatoria. Multas por retraso.</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h4>Contacto</h4>
+              <p>Biblioteca: Ext. 123 | Administración: Ext. 456</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Colegio OEA. Todos los derechos reservados.</p>
+      <p>Sistema de Reservas ColReser - Desarrollado para la comunidad educativa</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      setupLoanForm();
+      loadUserData();
+    });
+
+    function setupLoanForm() {
+      const itemType = document.getElementById('itemType');
+      const itemName = document.getElementById('itemName');
+      const startDate = document.getElementById('startDate');
+      const endDate = document.getElementById('endDate');
+      const startTime = document.getElementById('startTime');
+      const endTime = document.getElementById('endTime');
+      const loanForm = document.getElementById('loanForm');
+
+  
+      const today = new Date().toISOString().split('T')[0];
+      startDate.min = today;
+      endDate.min = today;
+
+     
+      itemType.addEventListener('change', function() {
+        const type = this.value;
+        itemName.innerHTML = '<option value="">Selecciona el elemento</option>';
+        
+        if (type) {
+          const items = getItemsByType(type);
+          items.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.name;
+            itemName.appendChild(option);
+          });
+        }
+      });
+
+      
+      startDate.addEventListener('change', function() {
+        endDate.min = this.value;
+        if (endDate.value && endDate.value < this.value) {
+          endDate.value = this.value;
+        }
+      });
+
+      
+      startTime.addEventListener('change', function() {
+        endTime.min = this.value;
+      });
+
+      
+      loanForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (validateForm()) {
+          submitLoanRequest();
+        }
+      });
+    }
+
+    function getItemsByType(type) {
+      const items = {
+        equipo: [
+          { id: 'laptop1', name: 'Laptop Dell XPS 13' },
+          { id: 'laptop2', name: 'Laptop HP Pavilion' },
+          { id: 'tablet1', name: 'iPad Pro' },
+          { id: 'pc1', name: 'Computadora de Escritorio' }
+        ],
+        libro: [
+          { id: 'libro1', name: 'Introducción a la Programación' },
+          { id: 'libro2', name: 'Matemáticas Avanzadas' },
+          { id: 'libro3', name: 'Historia del Arte' },
+          { id: 'libro4', name: 'Física Moderna' }
+        ],
+        espacio: [
+          { id: 'sala1', name: 'Sala de Estudio A-101' },
+          { id: 'sala2', name: 'Sala de Estudio A-102' },
+          { id: 'lab1', name: 'Laboratorio de Computación' },
+          { id: 'auditorio1', name: 'Auditorio Principal' }
+        ],
+        equipo_audiovisual: [
+          { id: 'proyector1', name: 'Proyector Epson' },
+          { id: 'camara1', name: 'Cámara Canon' },
+          { id: 'microfono1', name: 'Micrófono Inalámbrico' },
+          { id: 'pantalla1', name: 'Pantalla LED' }
+        ],
+        instrumento: [
+          { id: 'piano1', name: 'Piano Digital' },
+          { id: 'guitarra1', name: 'Guitarra Acústica' },
+          { id: 'violin1', name: 'Violín' },
+          { id: 'flauta1', name: 'Flauta Dulce' }
+        ]
+      };
+      
+      return items[type] || [];
+    }
+
+    function validateForm() {
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      const startTime = document.getElementById('startTime').value;
+      const endTime = document.getElementById('endTime').value;
+      
+      if (!startDate || !endDate || !startTime || !endTime) {
+        alert('Por favor completa todos los campos de fecha y hora');
+        return false;
+      }
+      
+      if (endDate < startDate) {
+        alert('La fecha de devolución no puede ser anterior a la fecha de inicio');
+        return false;
+      }
+      
+      if (startDate === endDate && endTime <= startTime) {
+        alert('La hora de finalización debe ser posterior a la hora de inicio');
+        return false;
+      }
+      
+      return true;
+    }
+
+    function submitLoanRequest() {
+      const formData = new FormData(document.getElementById('loanForm'));
+      
+      
+      alert('¡Préstamo solicitado exitosamente! Recibirás una confirmación por correo.');
+      
+      
+      setTimeout(() => {
+        window.location.href = 'estudiante.html';
+      }, 2000);
+    }
+
+    function loadUserData() {
+      const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+      const userName = document.querySelector('.user-name');
+      if (userName) userName.textContent = user.name || 'Estudiante';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - ColReser</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard">
+    <nav class="navbar">
+      <div class="nav-content">
+        <a href="#" class="nav-logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>ColReser</span>
+        </a>
+        
+        <ul class="nav-menu">
+          <li><a href="#" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+          <li><a href="prestamos.html"><i class="fas fa-calendar-plus"></i> Solicitar Préstamo</a></li>
+          <li><a href="prestados.html"><i class="fas fa-list"></i> Mis Préstamos</a></li>
+          <li><a href="historial.html"><i class="fas fa-history"></i> Historial</a></li>
+          <li><a href="configuracion.html"><i class="fas fa-cog"></i> Configuración</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <div class="user-profile" id="userProfile">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <span class="user-name">Estudiante</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          
+          <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">¡Bienvenido de vuelta!</h1>
+        <p class="dashboard-subtitle">Aquí tienes un resumen de tu actividad en ColReser</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="stat-number" id="totalPrestamos">15</div>
+          <div class="stat-label">Total de Préstamos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon red">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-number" id="prestamosActivos">3</div>
+          <div class="stat-label">Préstamos Activos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="stat-number" id="proximosVencimientos">2</div>
+          <div class="stat-label">Próximos Vencimientos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-number" id="elementosDisponibles">45</div>
+          <div class="stat-label">Elementos Disponibles</div>
+        </div>
+      </div>
+
+      <div class="actions-grid">
+        <div class="action-card" data-action="prestamos">
+          <div class="action-header">
+            <div class="action-icon primary">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div>
+              <h3 class="action-title">Solicitar Préstamo</h3>
+              <p class="action-description">Reserva equipos, libros o espacios de estudio para tu uso académico.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-card" data-action="prestados">
+          <div class="action-header">
+            <div class="action-icon success">
+              <i class="fas fa-list-alt"></i>
+            </div>
+            <div>
+              <h3 class="action-title">Mis Préstamos</h3>
+              <p class="action-description">Revisa el estado de tus préstamos activos y el historial de reservas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-card" data-action="historial">
+          <div class="action-header">
+            <div class="action-icon warning">
+              <i class="fas fa-history"></i>
+            </div>
+            <div>
+              <h3 class="action-title">Historial</h3>
+              <p class="action-description">Consulta tu historial completo de préstamos y devoluciones.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-card" data-action="configuracion">
+          <div class="action-header">
+            <div class="action-icon info">
+              <i class="fas fa-cog"></i>
+            </div>
+            <div>
+              <h3 class="action-title">Configuración</h3>
+              <p class="action-description">Gestiona tu perfil, notificaciones y preferencias del sistema.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="profileModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Perfil de Usuario</h2>
+        <button class="modal-close" id="closeProfileModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-info">
+          <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="profile-details">
+            <h3 id="profileName">Estudiante Ejemplo</h3>
+            <p id="profileEmail">estudiante@universidad.edu</p>
+            <p id="profileCode">Código: 2023001</p>
+          </div>
+        </div>
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <span class="stat-value">15</span>
+            <span class="stat-label">Préstamos Totales</span>
+          </div>
+          <div class="profile-stat">
+            <span class="stat-value">3</span>
+            <span class="stat-label">Activos</span>
+          </div>
+          <div class="profile-stat">
+            <span class="stat-value">98%</span>
+            <span class="stat-label">Puntualidad</span>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button class="btn btn-primary">
+            <i class="fas fa-edit"></i>
+            Editar Perfil
+          </button>
+          <button class="btn btn-secondary">
+            <i class="fas fa-cog"></i>
+            Configuración
+          </button>
+          <button class="btn btn-danger" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay"></div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2024 Colegio OEA. Todos los derechos reservados.</p>
+      <p>Sistema de Reservas ColReser - Desarrollado para la comunidad educativa</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserData();
+      setupProfileEvents();
+    });
+
+    function loadUserData() {
+      const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+      const profileName = document.getElementById('profileName');
+      const profileEmail = document.getElementById('profileEmail');
+      const userName = document.querySelector('.user-name');
+      
+      if (profileName) profileName.textContent = user.name || 'Estudiante Ejemplo';
+      if (profileEmail) profileEmail.textContent = user.email || 'estudiante@universidad.edu';
+      if (userName) userName.textContent = user.name || 'Estudiante';
+    }
+
+    function setupProfileEvents() {
+      const userProfile = document.getElementById('userProfile');
+      const profileModal = document.getElementById('profileModal');
+      const modalOverlay = document.getElementById('modalOverlay');
+      const closeModal = document.getElementById('closeProfileModal');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      if (userProfile) {
+        userProfile.addEventListener('click', () => {
+          profileModal.classList.add('show');
+          modalOverlay.classList.add('show');
+        });
+      }
+
+      if (closeModal) {
+        closeModal.addEventListener('click', closeProfileModal);
+      }
+
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', closeProfileModal);
+      }
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('currentUser');
+          window.location.href = 'index.html';
+        });
+      }
+    }
+
+    function closeProfileModal() {
+      const profileModal = document.getElementById('profileModal');
+      const modalOverlay = document.getElementById('modalOverlay');
+      
+      if (profileModal) profileModal.classList.remove('show');
+      if (modalOverlay) modalOverlay.classList.remove('show');
+    }
+  </script>
+</body>
+</html>
