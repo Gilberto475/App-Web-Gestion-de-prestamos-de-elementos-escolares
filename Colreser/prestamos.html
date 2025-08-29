@@ -44,7 +44,7 @@
     <main class="main-content">
       <div class="dashboard-header">
         <h1 class="dashboard-title">Solicitar Préstamo</h1>
-        <p class="dashboard-subtitle">Reserva equipos, libros o espacios para tu uso académico</p>
+        <p class="dashboard-subtitle">Reserva elementos y espacios para tu uso académico</p>
       </div>
 
       <div class="loan-form-container">
@@ -55,21 +55,22 @@
               
               <div class="form-row">
                 <div class="form-group">
-                  <label for="itemType">Tipo de Elemento</label>
+                  <label for="itemType">Área / Categoría</label>
                   <select id="itemType" required>
-                    <option value="">Selecciona el tipo</option>
-                    <option value="equipo">Equipo de Cómputo</option>
-                    <option value="libro">Libro</option>
-                    <option value="espacio">Espacio de Estudio</option>
-                    <option value="equipo_audiovisual">Equipo Audiovisual</option>
-                    <option value="instrumento">Instrumento Musical</option>
+                    <option value="">Selecciona el área</option>
+                    <option value="indumentario">INDUMENTARIO</option>
+                    <option value="tecnologia">TECNOLOGIA</option>
+                    <option value="espacios">ESPACIOS</option>
+                    <option value="musica">MUSICA</option>
+                    <option value="deporte_recreacion">DEPORTE Y RECREACION</option>
+                    <option value="vestuario">VESTUARIO</option>
                   </select>
                 </div>
                 
                 <div class="form-group">
                   <label for="itemName">Elemento Específico</label>
                   <select id="itemName" required>
-                    <option value="">Primero selecciona el tipo</option>
+                    <option value="">Primero selecciona el área</option>
                   </select>
                 </div>
               </div>
@@ -203,12 +204,12 @@
       const endTime = document.getElementById('endTime');
       const loanForm = document.getElementById('loanForm');
 
-  
+      
       const today = new Date().toISOString().split('T')[0];
       startDate.min = today;
       endDate.min = today;
 
-     
+      
       itemType.addEventListener('change', function() {
         const type = this.value;
         itemName.innerHTML = '<option value="">Selecciona el elemento</option>';
@@ -249,35 +250,59 @@
 
     function getItemsByType(type) {
       const items = {
-        equipo: [
-          { id: 'laptop1', name: 'Laptop Dell XPS 13' },
-          { id: 'laptop2', name: 'Laptop HP Pavilion' },
-          { id: 'tablet1', name: 'iPad Pro' },
-          { id: 'pc1', name: 'Computadora de Escritorio' }
+        indumentario: [
+          { id: 'indumentario_generico', name: 'Indumentario' }
         ],
-        libro: [
-          { id: 'libro1', name: 'Introducción a la Programación' },
-          { id: 'libro2', name: 'Matemáticas Avanzadas' },
-          { id: 'libro3', name: 'Historia del Arte' },
-          { id: 'libro4', name: 'Física Moderna' }
+        tecnologia: [
+          { id: 'computadores', name: 'computadores' },
+          { id: 'laptop', name: 'laptop' },
+          { id: 'impresora', name: 'impresora' },
+          { id: 'bafles', name: 'bafles' },
+          { id: 'microfonos', name: 'micrófonos' },
+          { id: 'fuentes_poder', name: 'fuentes de poder' },
+          { id: 'video_ven', name: 'video ven' }
         ],
-        espacio: [
-          { id: 'sala1', name: 'Sala de Estudio A-101' },
-          { id: 'sala2', name: 'Sala de Estudio A-102' },
-          { id: 'lab1', name: 'Laboratorio de Computación' },
-          { id: 'auditorio1', name: 'Auditorio Principal' }
+        espacios: [
+          { id: 'aula_multiple', name: 'aula múltiple' },
+          { id: 'lab_fisica', name: 'laboratorio de física' },
+          { id: 'lab_quimica', name: 'laboratorio de química' },
+          { id: 'aulas_especializadas', name: 'aulas especializadas (aulas de media técnica 3, aulas de informática 2)' }
         ],
-        equipo_audiovisual: [
-          { id: 'proyector1', name: 'Proyector Epson' },
-          { id: 'camara1', name: 'Cámara Canon' },
-          { id: 'microfono1', name: 'Micrófono Inalámbrico' },
-          { id: 'pantalla1', name: 'Pantalla LED' }
+        musica: [
+          { id: 'violin', name: 'violín' },
+          { id: 'contrabajo', name: 'contra bajo' },
+          { id: 'viola', name: 'viola' },
+          { id: 'chelo', name: 'chelo' },
+          { id: 'guitarra', name: 'guitarra' },
+          { id: 'bajo', name: 'bajo' },
+          { id: 'bateria', name: 'batería' },
+          { id: 'salso_fon', name: 'salso fon' },
+          { id: 'flauta_traversa', name: 'flauta traversa' },
+          { id: 'trompeta', name: 'trompeta' },
+          { id: 'trompo', name: 'trompo' },
+          { id: 'timbales', name: 'timbales' },
+          { id: 'maracas', name: 'maracas' },
+          { id: 'triangulo', name: 'triangulo' }
         ],
-        instrumento: [
-          { id: 'piano1', name: 'Piano Digital' },
-          { id: 'guitarra1', name: 'Guitarra Acústica' },
-          { id: 'violin1', name: 'Violín' },
-          { id: 'flauta1', name: 'Flauta Dulce' }
+        deporte_recreacion: [
+          { id: 'balon_micro', name: 'balón de micro' },
+          { id: 'balon_baloncesto', name: 'balón de baloncesto' },
+          { id: 'balon_voleibol', name: 'balón de voleibol' },
+          { id: 'pelota_tenis', name: 'pelota de tenis' },
+          { id: 'petos_blancos', name: 'petos blancos' },
+          { id: 'petos_azules', name: 'petos azules' },
+          { id: 'ajedrez', name: 'ajedrez' },
+          { id: 'conos_grandes', name: 'conos grandes' },
+          { id: 'conos_pequenos', name: 'conos pequeños' },
+          { id: 'red_voleibol', name: 'red de voleibol' },
+          { id: 'ping_pon', name: 'ping pon' }
+        ],
+        vestuario: [
+          { id: 'ponchos', name: 'ponchos' },
+          { id: 'gorros', name: 'gorros' },
+          { id: 'panuelos', name: 'pañuelos' },
+          { id: 'traje_tipico_mujer_blanco', name: 'trajes típicos mujer blanco' },
+          { id: 'traje_tipico_hombre_blanco', name: 'trajes típicos hombre blanco' }
         ]
       };
       
